@@ -1,0 +1,37 @@
+.homepage-header-text {
+    color: red;
+    font-size: 60px;
+}
+
+.homepage-small-text {
+    color: blue;
+    font-size: 20px;
+    display: block;
+}
+
+li:nth-child(even) {
+  color: rgb(174, 141, 228);
+}
+
+li:nth-child(odd) {
+  color: rgb(242, 177, 255);
+}
+
+.number-step {
+
+    display: flex; /* Makes elements display inline and behave like a box */
+    align-items: center; /* Aligns content vertically within the flexbox */
+    margin-bottom: 1rem; /* Adds space between each step */
+  }
+  
+.number-step .step-number {
+    padding-right: 5px;
+    color: rgb(255, 255, 255);
+    font-size: 3rem; /* Set the font size for the big number */
+    font-weight: bold; /* Makes the number bold */
+    margin-right: 1rem; /* Adds space between the number and text */
+  }
+
+.step {
+  text-align: start;
+}

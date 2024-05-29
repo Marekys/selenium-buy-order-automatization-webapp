@@ -1,0 +1,114 @@
+.url-style {
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 1000px;
+}
+
+th, td {
+    padding: 15px;
+    color: white;
+    font-family: arial;
+    text-align: center;
+}
+
+th {
+    text-align: left;
+    background-color: #16202d;
+    color: rgb(136, 136, 136);
+}
+
+
+tr:nth-child(even) {
+    background-color: #1d2733;
+}
+
+
+tr:nth-child(odd) {
+    background-color: #16202d;
+}
+
+.main-section-style-items{
+    background-color: #16202d;
+    padding: 30px;
+    margin-inline: 400px;
+    margin-top: 100px;
+    
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.items-table {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    padding-bottom: 40px;
+}
+
+.items-table-header {
+    margin-left: 10px;
+    display: flex;
+    font-size: xx-large;
+    color: white;
+}
+
+.items-table-buttons {
+    display: flex;
+    margin-left: auto;
+}
+
+.create-item-button{
+    display: inline-block;
+    padding: 13px 20px;
+    margin-right: 15px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #313f50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-item-button{
+    display: inline-block;
+    padding: 8px 40px;
+    font-size: 15px;
+    text-align: center;
+    background-color: #313f50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.item-buttons {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.delete-item-button{
+    display: inline-block;
+    padding: 8px 30px;
+    font-size: 15px;
+    text-align: center;
+    background-color: #b4262d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 90%;
+    margin-left: 20px;
+}
