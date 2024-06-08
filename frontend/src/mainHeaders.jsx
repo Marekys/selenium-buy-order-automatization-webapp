@@ -28,10 +28,6 @@ const MainHeaders = () => {
         setIsModalOpen(false);
     };
 
-    const handleRefreshItemsTable = () => {
-        setRefreshItemsTable(prevState => !prevState);
-    };
-
     return (
         <>
             <div className="header">
@@ -83,7 +79,7 @@ const MainHeaders = () => {
             </div>
             <div className='mainHalf'>
                 {currentSection === 'Home' && <HomeTab/>}
-                {currentSection === 'ItemsTable' && <ItemsTable refreshItemsTable={refreshItemsTable} onAutomationSuccess={handleRefreshItemsTable}/>}
+                {currentSection === 'ItemsTable' && <ItemsTable refreshItemsTable={refreshItemsTable} />}
                 {currentSection === 'HowToGuide' && <HowToGuide />}
                 {currentSection === 'AccountCookies' && <AccountCookies />}
                 {currentSection === 'Login' && <Login />}

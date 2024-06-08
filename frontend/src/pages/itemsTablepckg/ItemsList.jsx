@@ -34,16 +34,24 @@ const ItemsList = ({ items, updateItem, updateCallback }) => {
         return parsedText;
     };
 
+
     const getStatusIcon = (status) => {
+        const Tooltip = ({ text, children }) => (
+            <div className="tooltip-container">
+                {children}
+                <div className="tooltip-text">{text}</div>
+            </div>
+        );
+
         switch (status) {
             case 'Status.INCORRECT_URL':
-                return <X />;
+                return <Tooltip text="Incorrect URL"><X /></Tooltip>;
             case 'Status.PENDING':
-                return <Circle/>;
+                return <Tooltip text="Pending"><Circle /></Tooltip>;
             case 'Status.IN_PROGRESS':
-                return <Loader />;
+                return <Tooltip text="In Progress"><Loader /></Tooltip>;
             case 'Status.COMPLETED':
-                return <Check />;
+                return <Tooltip text="Completed"><Check /></Tooltip>;
             default:
                 return null;
         }
@@ -53,7 +61,6 @@ const ItemsList = ({ items, updateItem, updateCallback }) => {
         <table>
             <thead>
                 <tr>
-                    <th>Item ID</th>
                     <th className="url-style">Url</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -63,7 +70,6 @@ const ItemsList = ({ items, updateItem, updateCallback }) => {
             <tbody>
                 {items.map((item) => (
                     <tr key={item.id}>
-                        <td>{item.id}</td>
                         <td className="url-style">{parseUrlText(item.itemUrl)}</td>
                         <td>{item.itemPrice}</td>
                         <td>{item.itemQuantity}</td>

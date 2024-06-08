@@ -3,11 +3,12 @@ import "./RunBOs.css"
 import { useAuth } from "../../loginComponents/authContext.jsx"
 import ItemsTable from '../itemsTablepckg/itemsTable.jsx';
 
-const RunBOs = ({ onAutomationSuccess }) => {
+const RunBOs = ({ updateCallback }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [file, setFile] = useState(null);
     const [hour, setHour] = useState('0');
     const { user } = useAuth();
+    
     
     const handleOpenModal = () => {
         setIsOpen(true);
@@ -15,9 +16,6 @@ const RunBOs = ({ onAutomationSuccess }) => {
 
     const handleCloseModal = () => {
         setIsOpen(false);
-        if (typeof onAutomationSuccess === 'function') {
-            onAutomationSuccess();
-        }
     };
 
     const handleFileUpload = (event) => {
@@ -33,12 +31,16 @@ const RunBOs = ({ onAutomationSuccess }) => {
         }
         
         const hourAsNumber = +hour;
-
+        let intervalId;
         const formData = new FormData();
         formData.append('file', file);
         formData.append('hour', hourAsNumber)
     
         try {
+            intervalId = setInterval(() => {
+                updateCallback();
+            }, 2000);
+    
             const response = await fetch('http://127.0.0.1:5000/automate', {
                 method: 'POST',
                 headers: {
@@ -49,18 +51,14 @@ const RunBOs = ({ onAutomationSuccess }) => {
     
             if (!response.ok) {
                 throw new Error('Failed to start automation process');
-            }
-    
-            const result = await response.json();
-            alert(result.message);
-
-            if (typeof onAutomationSuccess === 'function') {
-                onAutomationSuccess();
+            } else {
+                updateCallback();
             }
         } catch (error) {
             console.error('Error:', error);
+        } finally {
+            clearInterval(intervalId);
         }
-        
     };
 
     const handleHourInputChange = (event) => {

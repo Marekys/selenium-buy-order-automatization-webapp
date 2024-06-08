@@ -9,7 +9,7 @@ import { useAuth } from '../../loginComponents/authContext.jsx';
 import "../../loginComponents/loginModal.css"
 
 
-function ItemsTable( { refreshItemsTable, onAutomationSuccess }) {
+function ItemsTable( { refreshItemsTable }) {
   const [items, setItems] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentItem, setCurrentItem] = useState({})
@@ -69,7 +69,7 @@ function ItemsTable( { refreshItemsTable, onAutomationSuccess }) {
                 </div>
               </div>
             }
-            <RunBOs onAutomationSuccess={onAutomationSuccess} userId={user?.id}></RunBOs>
+            <RunBOs updateCallback={onUpdate} userId={user?.id}></RunBOs>
           </div>
         </div>
         <ItemsList userId={user?.id} items={items} updateItem={openEditModal} updateCallback={onUpdate}/>

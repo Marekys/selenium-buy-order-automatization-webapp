@@ -66,6 +66,8 @@ def create_item():
     print(len(driver.page_source))
     if (len(driver.page_source)) > 80000:
         status = Status.PENDING
+        print("item was changed 2\n")
+
     else:
         status = Status.INCORRECT_URL
     driver.quit()
@@ -105,6 +107,7 @@ def update_item(item_id):
     print(len(driver.page_source))
     if (len(driver.page_source)) > 80000:
         item.status = Status.PENDING
+        print("item was changed\n")
 
     if url:
         item.url = url
@@ -180,18 +183,21 @@ def get_messages():
 def automate():
     try:
         user_id = get_jwt_identity()
-        items = Item.query.filter_by(user_id=user_id).all()
-        items_to_procces = []
-        for item in items:
-            if item.status == Status.PENDING or Status.IN_PROGRESS:
-                items_to_procces.append(item)
-                item.status = Status.IN_PROGRESS
-        processes = [[item.url, item.price, item.quantity] for item in items_to_procces]
         if 'file' not in request.files:
             return jsonify({"error": "No file part"}), 400
         file = request.files['file']
         if file.filename == '':
             return jsonify({"error": "No selected file"}), 400
+
+        items = Item.query.filter_by(user_id=user_id).all()
+        items_to_procces = []
+        for item in items:
+            if item.status == Status.PENDING:
+                item.status = Status.IN_PROGRESS
+                print("item was changed\n")
+                items_to_procces.append(item)
+        
+        db.session.commit()
 
         save_path = "./userFile"
         if not os.path.exists(save_path):
@@ -205,16 +211,17 @@ def automate():
 
         hour_to_start = int(request.form['hour'])
         while hour_to_start != 0:
-            print("We cycle")
-            current_time = datetime.datetime.now()
+            print("We waiting for hour")
+            current_time = datetime.now()
+            print(current_time.hour)
             if current_time.hour == hour_to_start:
                 print(f"Starting at hour {hour_to_start}...")
                 break
 
-            time.sleep(30)
+            time.sleep(10)
 
         while True:
-            thread_compile(thread_creation(processes, stop_event, file_path))
+            thread_compile(thread_creation(items_to_procces, stop_event, file_path))
             if not stop_event.is_set():
                 break
 
@@ -227,10 +234,9 @@ def automate():
 
         print("All processes finished successfully!")
         os.remove(file_path)
-        for finished_item in items_to_procces:
-            finished_item.status = Status.COMPLETED
-        db.session.commit()
+
         return jsonify({"message": "All processes finished successfully!"}), 200
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
