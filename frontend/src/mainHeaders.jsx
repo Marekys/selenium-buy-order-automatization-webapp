@@ -1,16 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { Download, Home, ToggleLeft, ToggleRight, HelpCircle, Send } from 'react-feather';
-import ItemsTable from './pages/itemsTablepckg/itemsTable';
-import HomeTab from './pages/homeTabDir/homeTab';
-import HowToGuide from './pages/howToPack/HowToGuide';
-import AccountCookies from './pages/accCookiesPack/accountCookies';
-import Login from './loginComponents/loginComp.jsx'; 
-import ContactForm from './pages/contactFormDir/contactForm.jsx';
-import { useAuth } from './loginComponents/authContext.jsx';
+import ItemsTable from './Components/itemsTable/itemsTable';
+import HomeTab from './Components/homePage/homeTab';
+import HowToGuide from './Components/howToAutomate/HowToGuide';
+import AccountCookies from './Components/accountCookies/accountCookies';
+import Login from './Components/login/loginComp.jsx'; 
+import ContactForm from './Components/contactFormPage/contactForm.jsx';
+import { useAuth } from './Components/login/authContext.jsx';
+import LoginModal from './Components/login/loginModal.jsx';
+import Messages from './Components/contactFormPage/messages.jsx';
 import logo from './images/logo.svg';
-import LoginModal from './loginComponents/loginModal.jsx';
-import Messages from './pages/contactFormDir/messages.jsx';
 import "./styles.css"
 
 

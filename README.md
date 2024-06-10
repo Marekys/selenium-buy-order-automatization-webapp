@@ -2,7 +2,9 @@
 ## Description
 Web application that can automaticly put Buy Orders on new and old Steam items.  
 Using a chrome selenium and other technologies.
-Project is working but is still work in progress.
+Project is working but is still work in progress.  
+For a video review of this project visit: *https://www.youtube.com/watch?v=DkjPQh2yl9I*
+
 ## Installation
 Unzip the project in your folder, cd to the frontend and run:
 * A node.js is required to run this command.

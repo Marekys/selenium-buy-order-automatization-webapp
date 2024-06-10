@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useAuth } from '../../loginComponents/authContext.jsx'; // Adjust the import according to your file structure
-import "../../loginComponents/loginModal.css"
+import { useAuth } from '../../Components/login/authContext.jsx'; // Adjust the import according to your file structure
+import "../../Components/login/loginModal.css"
 import "../../index.css"
-import "../homeTabDir/homeTab.css"
+import "../homePage/homeTab.css"
 
 const ItemForm = ({ existingItem = {}, updateCallback }) => {
     const { user } = useAuth();

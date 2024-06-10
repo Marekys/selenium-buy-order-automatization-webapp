@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import "./RunBOs.css"
-import { useAuth } from "../../loginComponents/authContext.jsx"
-import ItemsTable from '../itemsTablepckg/itemsTable.jsx';
+import { useAuth } from "../../Components/login/authContext.jsx"
 
 const RunBOs = ({ updateCallback }) => {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,29 +1,22 @@
 import React, { useState } from 'react';
 import { useAuth } from './authContext.jsx';
 import "./loginModal.css"
-import "../../src/index.css"
+import "../../index.css"
 
-const SignUp = ({ closeModal }) => {
+const Login = ({ closeModal }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const { register } = useAuth();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await register(username, password, email);
-            alert('Registration successful');
-            closeModal();
-        } catch (error) {
-            console.error('Registration failed', error);
-            alert('Registration failed');
-        }
+        await login(username, password);
+        closeModal();
     };
 
     return (
         <form onSubmit={handleSubmit} className='form-style'>
-            <input
+            <input 
                 className='text-input-style'
                 type="text"
                 value={username}
@@ -37,16 +30,9 @@ const SignUp = ({ closeModal }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
             />
-            <input
-                className='text-input-style'
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-            />
-            <button className='start-button' type="submit">Sign Up</button>
+            <button className='start-button' type="submit">Login</button>
         </form>
     );
 };
 
-export default SignUp;
+export default Login;

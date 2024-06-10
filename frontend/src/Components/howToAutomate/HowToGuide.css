@@ -35,3 +35,33 @@ li:nth-child(odd) {
 .step {
   text-align: start;
 }
+
+.toggle-video-button {
+  background-color: #3b1bb1;
+  color: white;
+  border: none;
+  font-size: larger;
+  padding: 20px 30px;
+  cursor: pointer;
+  margin-bottom: 40px;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+
+.video-container {
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 315px;
+}
+
+.video-container-hidden {
+  max-height: 0;
+}
+
+.video-container-visible {
+  max-height: 500px; /* Adjust as needed based on the content size */
+}

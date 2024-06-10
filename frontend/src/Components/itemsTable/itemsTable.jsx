@@ -5,8 +5,8 @@ import ItemForm from './ItemForm';
 import "../../index.css";
 import "./itemsTable.css";
 import RunBOs from '../runBuyOrders/RunBOs';
-import { useAuth } from '../../loginComponents/authContext.jsx';
-import "../../loginComponents/loginModal.css"
+import { useAuth } from '../../Components/login/authContext.jsx';
+import "../../Components/login/loginModal.css"
 
 
 function ItemsTable( { refreshItemsTable }) {

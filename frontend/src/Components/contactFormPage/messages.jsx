@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../loginComponents/authContext.jsx';
+import { useAuth } from '../../Components/login/authContext.jsx';
 
 const Messages = () => {
     const [messages, setMessages] = useState([]);

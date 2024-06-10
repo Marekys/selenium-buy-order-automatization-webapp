@@ -1,6 +1,6 @@
 import React from "react"
 import "./itemsTable.css"
-import { useAuth } from "../../loginComponents/authContext.jsx"
+import { useAuth } from "../../Components/login/authContext.jsx"
 import { X, Loader, Circle, Check } from 'react-feather';
 
 const ItemsList = ({ items, updateItem, updateCallback }) => {
