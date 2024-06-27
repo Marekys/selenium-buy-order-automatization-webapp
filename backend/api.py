@@ -58,19 +58,11 @@ def create_item():
     url = request.json.get("itemUrl")
     price = request.json.get("itemPrice")
     quantity = request.json.get("itemQuantity")
+    status = Status.PENDING
 
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome(chrome_driver_path, options=options)
-    driver.get(url)
-    print(len(driver.page_source))
-    if (len(driver.page_source)) > 80000:
-        status = Status.PENDING
-        print("item was changed 2\n")
-
-    else:
+    if not check_url(url):
         status = Status.INCORRECT_URL
-    driver.quit()
+        print("Item's url: {url} was incorrect.\n")
 
     if not url or not price or not quantity:
         return jsonify({"error": "Please provide all required fields"}), 400
@@ -96,25 +88,20 @@ def update_item(item_id):
     if item.user_id != user_id:
         return jsonify({"error": "Unauthorized access"}), 403
 
-    url = request.json.get("itemUrl")
-    price = request.json.get("itemPrice")
-    quantity = request.json.get("itemQuantity")
+    new_url = request.json.get("itemUrl")
+    new_price = request.json.get("itemPrice")
+    new_quantity = request.json.get("itemQuantity")
 
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome(chrome_driver_path, options=options)
-    driver.get(url)
-    print(len(driver.page_source))
-    if (len(driver.page_source)) > 80000:
-        item.status = Status.PENDING
-        print("item was changed\n")
+    if not check_url(new_url):
+        item.status = Status.INCORRECT_URL
+        print("Item's url: {url} was incorrect.\n")
 
-    if url:
-        item.url = url
-    if price:
-        item.price = float(price)
-    if quantity:
-        item.quantity = int(quantity)
+    if new_url:
+        item.url = new_url
+    if new_price:
+        item.price = float(new_price)
+    if new_quantity:
+        item.quantity = int(new_quantity)
 
     try:
         db.session.commit()
@@ -217,7 +204,6 @@ def automate():
             if current_time.hour == hour_to_start:
                 print(f"Starting at hour {hour_to_start}...")
                 break
-
             time.sleep(10)
 
         while True:

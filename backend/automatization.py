@@ -83,11 +83,20 @@ def calculating_processe_price(processess):
     print(price)
     return 0
 
+def check_url(url):
+    # Check if the URL contains the required string
+    if "steamcommunity.com/market/listings/" in url:
+        # Check if the URL ends with a space
+        if not url.endswith(" "):
+            return True
+    return False
 
 def error_fixer_vpn():
+    print("Disconnecting VPN")
     os.system("nordvpn disconnect cz")
     time.sleep(3)
 
+    print("Connecting a new VPN")
     os.system("nordvpn connect cz")
     time.sleep(5)
 
@@ -101,15 +110,19 @@ def error_fixer_vpn():
 
 def thread_creation(items_to_procces, stop_event, file_path):
     # Create threads for each process
+    print("Start of threading")
     threads = []
     for item in items_to_procces:
         thread = threading.Thread(target=buy_process, args=(item, stop_event, file_path))
         threads.append(thread)
-        thread.start()
+        thread.start()        
     return threads
 
 def thread_compile(threads):
     # Wait for all threads to finish
+    if len(threads) == 0:
+        print("No threads were created")
+
     for thread in threads:
         thread.join()
 

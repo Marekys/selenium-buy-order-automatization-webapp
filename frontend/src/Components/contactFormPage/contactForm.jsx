@@ -35,7 +35,7 @@ const ContactForm = () => {
         <div className="main-section-style-contact">
             <form onSubmit={handleSubmit}>
                 <h1 className="title-text">Talk to Us</h1>
-                <div className="form-group input-group">
+                <div className="form-group input-group w-max">
                     <label htmlFor="formEmail" className="d-block">
                         <Mail className="input-icon" />
                     </label>
@@ -49,14 +49,14 @@ const ContactForm = () => {
                         required
                     />
                 </div>
-                <div className="form-group input-group">
+                <div className="form-group input-group w-max">
                     <label className="d-block" htmlFor="formSubject">
                         <User className="input-icon" />
                     </label>
                     <input
                         type="text"     
                         id="formEmail"  
-                        className="form-control form-control-lg thick" 
+                        className="form-control form-control-lg thick w-max" 
                         placeholder="Subject"  
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
@@ -76,7 +76,7 @@ const ContactForm = () => {
                     />
                 </div>
                 <div className="text-center">
-                    <button type="submit" className="btn btn-primary" tabIndex="-1">Send message</button>
+                    <button type="submit" className="btn btn-primary w-max" tabIndex="-1">Send message</button>
                 </div>
             </form>
         {message && <p>{message}</p>}

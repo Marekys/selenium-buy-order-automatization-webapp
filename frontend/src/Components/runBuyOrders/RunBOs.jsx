@@ -71,8 +71,10 @@ const RunBOs = ({ updateCallback }) => {
 
             {isOpen && (
                 <div className="modal">
-                    <div className='modal-content'>
+                    <div className='modal-content items-start w-max p-20'>
                         <span className="close" onClick={handleCloseModal}>&times;</span>
+                        <div className='flex row w-max items-center text-xl'>
+                            Hour of start:
                         <div>
                             <input 
                                 type="text" 
@@ -82,10 +84,11 @@ const RunBOs = ({ updateCallback }) => {
                                 onChange={handleHourInputChange}
                             />
                         </div>
+                        </div>
                         <div>
                             <input className='upload-file-style' type="file" onChange={handleFileUpload} />
                         </div>
-                        <button onClick={handleAutomate} className='automateButton'>Automate</button>
+                        <button onClick={handleAutomate} className='automateButton w-3/4 ml-8 mt-8'>Automate</button>
                     </div>
                 </div>
             )}
