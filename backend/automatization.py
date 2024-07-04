@@ -13,9 +13,7 @@ chrome_driver_path = "/home/marek/Downloads/chromesubor/chromedriver"
 # Define a function to perform the buying process for a specific item
 def buy_process(item, stop_event, file_path):
     with app.app_context():
-        url = item.url
-        price = item.price
-        quantity = item.quantity
+        url, price, quantity = item.url, item.price, item.quantity
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
         driver = webdriver.Chrome(chrome_driver_path, options=options)
@@ -75,13 +73,6 @@ def buy_process(item, stop_event, file_path):
 
         return True
 
-def calculating_processe_price(processess):
-    price = 0
-    for each in processess:
-        nam, x, y = each
-        price += x * y
-    print(price)
-    return 0
 
 def check_url(url):
     # Check if the URL contains the required string

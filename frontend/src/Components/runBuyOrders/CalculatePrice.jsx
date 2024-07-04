@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import "./RunBOs.css"
 import { useAuth } from "../../Components/login/authContext.jsx"
 
-const RunBOs = ({ updateCallback }) => {
+const CalculatePrice = ({ updateCallback }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [file, setFile] = useState(null);
-    const [hour, setHour] = useState('0');
     const { user } = useAuth();
     
     
@@ -29,18 +28,16 @@ const RunBOs = ({ updateCallback }) => {
             return;
         }
         
-        const hourAsNumber = +hour;
         let intervalId;
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('hour', hourAsNumber)
     
         try {
             intervalId = setInterval(() => {
                 updateCallback();
             }, 2000);
     
-            const response = await fetch('http://127.0.0.1:5000/automate', {
+            const response = await fetch('http://127.0.0.1:5000/calculate', {
                 method: 'POST',
                 headers: {
                     "Authorization": `Bearer ${user.token}`,
@@ -67,28 +64,19 @@ const RunBOs = ({ updateCallback }) => {
     
     return (
         <div>
-            <button onClick={handleOpenModal} className='runningItems'>Run automation</button>
+            <button onClick={handleOpenModal} className='mr-4 px-4 py-3.5 text-base font-bold text-center no-underline bg-red-700 text-white border-none rounded'>
+                Calculate Balance
+            </button>
 
             {isOpen && (
                 <div className="modal">
                     <div className='modal-content items-start w-max'>
                         <span className="close" onClick={handleCloseModal}>&times;</span>
-                        <div className='flex row w-max items-center text-xl'>
-                            Hour of start:
-                        <div>
-                            <input 
-                                type="text" 
-                                className='text-input-style' 
-                                placeholder="Enter starting Hour" 
-                                value={hour}
-                                onChange={handleHourInputChange}
-                            />
-                        </div>
-                        </div>
+
                         <div>
                             <input className='upload-file-style' type="file" onChange={handleFileUpload} />
                         </div>
-                        <button onClick={handleAutomate} className='automateButton w-3/4 ml-8 mt-8'>Automate</button>
+                        <button onClick={handleAutomate} className='automateButton w-3/4 ml-8 mt-8'>Calculate Used Balance</button>
                     </div>
                 </div>
             )}
@@ -96,4 +84,4 @@ const RunBOs = ({ updateCallback }) => {
     );
 };
 
-export default RunBOs;
+export default CalculatePrice;

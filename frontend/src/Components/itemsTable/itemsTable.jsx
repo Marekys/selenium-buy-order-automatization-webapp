@@ -5,6 +5,7 @@ import ItemForm from './ItemForm';
 import "../../index.css";
 import "./itemsTable.css";
 import RunBOs from '../runBuyOrders/RunBOs';
+import CalculatePrice from '../runBuyOrders/CalculatePrice.jsx';
 import { useAuth } from '../../Components/login/authContext.jsx';
 import "../../Components/login/loginModal.css"
 
@@ -69,6 +70,7 @@ function ItemsTable( { refreshItemsTable }) {
                 </div>
               </div>
             }
+            <CalculatePrice updateCallback={onUpdate} userId={user?.id}></CalculatePrice>
             <RunBOs updateCallback={onUpdate} userId={user?.id}></RunBOs>
           </div>
         </div>

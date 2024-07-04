@@ -198,9 +198,8 @@ def automate():
 
         hour_to_start = int(request.form['hour'])
         while hour_to_start != 0:
-            print("We waiting for hour")
             current_time = datetime.now()
-            print(current_time.hour)
+            print("Current hour is: {current_time.hour}")
             if current_time.hour == hour_to_start:
                 print(f"Starting at hour {hour_to_start}...")
                 break
@@ -225,6 +224,80 @@ def automate():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route("/calculate", methods=['POST'])
+@jwt_required()
+def calculate_buy_order_balance():
+    price = 0
+    url = "https://steamcommunity.com/market/"
+
+    user_id = get_jwt_identity()
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    items = Item.query.filter_by(user_id=user_id).all()
+    for item in items:
+        if item.status == Status.PENDING:
+            price += item.price * item.quantity
+            print("Calculated pending item price")
+
+    save_path = "./userFile"
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+
+    file_path = os.path.join(save_path, file.filename)
+    file.save(file_path)
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(chrome_driver_path, options=options)
+
+    driver.get(url)
+
+
+    cookies = pickle.load(open(file_path, "rb"))
+
+    for cookie in cookies:
+        driver.add_cookie(cookie)
+
+    # Refresh the page to update the state with the loaded cookies
+    driver.refresh()
+    time.sleep(2)
+
+    wallet_balance = driver.find_element(By.ID, "marketWalletBalanceAmount")
+    wallet_balance_text = wallet_balance.text.strip().replace('€', '').replace(',', '.')
+
+    listings_parent = driver.find_element(By.XPATH, "/html/body/div[1]/div[7]/div[4]/div[1]/div[4]/div[2]/div[1]/div[1]/div[4]")
+    
+    child_divs = listings_parent.find_elements(By.XPATH, "./div")
+
+    for div in child_divs[1:]:
+        try:
+            quantity_div = div.find_element(By.CLASS_NAME, 'market_listing_right_cell.market_listing_my_price.market_listing_buyorder_qty')
+            quantity = int(quantity_div.text.strip())
+            
+            price_div = div.find_element(By.CLASS_NAME, 'market_listing_right_cell.market_listing_my_price')
+            price_text = price_div.text.strip().replace('€', '').replace(',', '.')
+        
+            if '--' in price_text:
+                price_text = price_text.replace('--', '00')
+        
+            item_price = float(price_text)
+
+            price += item_price * quantity
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            continue
+
+    driver.quit()
+
+    available_balance = float(wallet_balance_text) * 10
+    print(f"Avalaible balance is {available_balance}, total balance requested will be: {price}")
+    return jsonify({"result": f"Avalaible balance is {available_balance}, total balance requested will be: {price}"}), 200
+
 
 
 @app.route('/load_cookies')
